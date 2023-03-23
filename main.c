@@ -1,7 +1,6 @@
 #include "monty.h"
 #define _POSIX_C_SOURCE 200809L
 #define _GNU_SOURCE
-#include <stdio.h>
 
 bus_t bus = {NULL, NULL, NULL, 0};
 
@@ -15,7 +14,7 @@ bus_t bus = {NULL, NULL, NULL, 0};
 int main(int argc, char *argv[])
 {
 
-	char *content;
+	char *content = NULL;
 	FILE *file;
 	size_t size = 0;
 	ssize_t read_line = 1;
@@ -25,18 +24,17 @@ int main(int argc, char *argv[])
 	if (argc != 2)
 	{
 		fprintf(stderr, "Usage: monty file\n");
-		exit(EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	}
 	file = fopen(argv[1], "r");
 	bus.file = file;
 	if (!file)
 	{
 		fprintf(stderr, "Error: Can't open file%s\n", argv[1]);
-		exit(EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	}
 	while (read_line > 0)
 	{
-		content = NULL;
 		read_line = getline(&content, &size, file);
 		bus.content = content;
 		counter++;
